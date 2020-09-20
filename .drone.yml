@@ -8,10 +8,10 @@ trigger:
         - master
 
 steps:
-    - name: publish
+    - name: docker-publish
       image: plugins/docker
       settings:
-        repo: hachikoapp/goapp
+        repo: hachikoapp/timeoff-management-app
         tags: [ "${DRONE_COMMIT_SHA}", "latest"]
         username:
             from_secret: docker_username
