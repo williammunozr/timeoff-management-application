@@ -15,7 +15,7 @@
     "username": "database_username",
     "password": "Lifted2*Quickly*Fire",
     "database": "timeoffdb",
-    "host": "timeoffdb-mysql",
+    "host": "timedb-mysqlha",
     "dialect": "mysql"
   }
 }
