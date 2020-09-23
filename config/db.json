@@ -12,8 +12,8 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "DpEk8KJOXr",
+    "username": "database_username",
+    "password": "Lifted2*Quickly*Fire",
     "database": "timeoffdb",
     "host": "timeoffdb-mysql",
     "dialect": "mysql"
