@@ -13,9 +13,9 @@
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "DpEk8KJOXr",
     "database": "timeoffdb",
-    "host": "timedb-mysqlha",
+    "host": "timeoffdb-mysql",
     "dialect": "mysql"
   }
 }
