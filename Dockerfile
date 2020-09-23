@@ -34,6 +34,6 @@ WORKDIR /app
 RUN git clone https://github.com/williammunozr/timeoff-management-application.git timeoff-management
 WORKDIR /app/timeoff-management
 
-RUN npm install
+RUN npm install --production
 
 CMD npm start
