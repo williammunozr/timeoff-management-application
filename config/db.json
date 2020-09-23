@@ -12,7 +12,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "database_username",
+    "username": "root",
     "password": "Lifted2*Quickly*Fire",
     "database": "timeoffdb",
     "host": "timedb-mysqlha",
