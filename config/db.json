@@ -14,7 +14,7 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_production",
+    "database": "timeoffdb",
     "host": "timedb-mysqlha",
     "dialect": "mysql"
   }
