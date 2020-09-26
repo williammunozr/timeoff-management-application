@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+   name: timeoffapp
+   labels:
+    run: timeoff
+   annotations:
+    external-dns.alpha.kubernetes.io/hostname: timeoff-management.cloud-station.io  
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:{{ .Values.cloud.accountId }}:certificate/4a5cb917-60c4-46c0-a8ea-d734e62a5dbf
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+spec:
+   ports:
+   - name: http
+     port: 80
+     targetPort: 3000
+     protocol: TCP
+   - name: https
+     port: 443
+     targetPort: 3000
+     protocol: TCP
+   type: LoadBalancer
+   selector:
+     app: timeoff

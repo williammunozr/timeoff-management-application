@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: timeoffapp
+spec:
+   replicas: 3
+   selector:
+     matchLabels:
+       app: timeoff
+   template:
+     metadata:
+       labels:
+         app: timeoff
+     spec:
+       containers:
+       - name: timeoffapp
+         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+         imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+         command: ["npm"]
+         args: ["start"]         
+         ports:
+         - containerPort: 3000
+         env:
+         - name: NODE_ENV
+           value: production       
+         - name: DB_HOST
+           value: {{ .Values.database.dbEndpoint }}
+         - name: DB_NAME
+           value: {{ .Values.database.dbName }}
+         - name: DB_USERNAME
+           value: {{ .Values.database.dbUsername }}
+         - name: DB_PASSWORD
+           value: {{ .Values.database.dbPassword }}
+         - name: DB_DIALECT
+           value: {{ .Values.database.dbDialect }}

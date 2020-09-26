@@ -17,3 +17,13 @@ steps:
             from_secret: docker_username
         password:
             from_secret: docker_password
+    - name: app-deploy
+      image: pelotech/drone-helm3
+      settings:
+        mode: upgrade
+        chart: ./timeoffapp/
+        release: timeoffapp
+      environment:
+        KUBE_API_SERVER: https://10C8A47DBFD8BA04869B72480077B589.sk1.us-east-2.eks.amazonaws.com
+        KUBE_TOKEN:
+          from_secret: kubernetes_token
