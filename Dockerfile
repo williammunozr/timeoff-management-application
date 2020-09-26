@@ -28,8 +28,8 @@ RUN apk add --no-cache \
     python \
     vim 
     
-RUN adduser --system app --home /app
-USER app
+# RUN adduser --system app --home /app
+# USER app
 WORKDIR /app
 RUN git clone https://github.com/williammunozr/timeoff-management-application.git timeoff-management
 WORKDIR /app/timeoff-management
