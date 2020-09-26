@@ -12,10 +12,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "timeoffuser",
-    "password": "Lifted2*Quickly*Fire",
-    "database": "timeoffdb",
-    "host": "terraform-eks-01.ckz23kltqu6m.us-east-2.rds.amazonaws.com",
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
