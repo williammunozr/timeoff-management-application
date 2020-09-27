@@ -12,18 +12,31 @@ steps:
       image: plugins/docker
       settings:
         repo: hachikoapp/timeoff-management-app
-        tags: [ "${DRONE_COMMIT_SHA}", "latest"]
+        tags: [ "${DRONE_COMMIT_SHA:0:8}", "latest"]
         username:
             from_secret: docker_username
         password:
             from_secret: docker_password
+
     - name: app-deploy
-      image: pelotech/drone-helm3
-      settings:
-        mode: upgrade
-        chart: ./timeoffapp/
-        release: timeoffapp
+      image: danoph/drone-eks-helm
+      secrets: [ aws_access_key_id, aws_secret_access_key ]
       environment:
-        KUBE_API_SERVER: https://10C8A47DBFD8BA04869B72480077B589.sk1.us-east-2.eks.amazonaws.com
-        KUBE_TOKEN:
-          from_secret: kubernetes_token
+        EKS_CLUSTER_NAME:
+          from_secret: cluster_name
+        AWS_REGION:
+          from_secret: aws_region
+        AWS_ACCOUNT_ID:
+          from_secret: aws_account_id
+        DB_ENDPOINT:
+          from_secret: db_endpoint
+        DB_NAME:
+          from_secret: db_name
+        DB_USERNAME:
+          from_secret: db_username
+        DB_PASSWORD:
+          from_secret: db_password
+      helm: upgrade --install --set cloud.accountId=${AWS_ACCOUNT_ID} --set image.tag=ci-${DRONE_COMMIT_SHA:0:8} --set database.dbEndpoint=${DB_ENDPOINT} --set database.dbName=${DB_NAME} --set database.dbUsername=${DB_USERNAME} --set database.dbPassword=${DB_PASSWORD} timeoffapp timeoffapp
+      when:
+        branch: master
+        event: [push, tag, deployment]

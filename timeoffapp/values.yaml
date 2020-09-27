@@ -11,4 +11,4 @@ database:
   dbName: rds_name
   dbUsername: rds_username
   dbPassword: rds_password
-  dbDialect: rds_dialect
+  dbDialect: mysql
