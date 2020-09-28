@@ -4,6 +4,11 @@ pipeline {
         registry = "hachikoapp/timeoff-management-app" 
         registryCredential = 'dockerHubId' 
         dockerImage = '' 
+
+        GIT_COMMIT_SHORT = sh(
+                script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+                returnStdout: true
+        )
     }
 
     agent any 
@@ -13,7 +18,7 @@ pipeline {
         stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                    dockerImage = docker.build registry + ":$GIT_COMMIT_SHORT" 
                 }
             } 
         }
@@ -30,7 +35,7 @@ pipeline {
 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi $registry:$BUILD_NUMBER" 
+                sh "docker rmi $registry:$GIT_COMMIT_SHORT" 
             }
         } 
     }
