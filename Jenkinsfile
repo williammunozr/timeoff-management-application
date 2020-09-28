@@ -38,5 +38,18 @@ pipeline {
                 sh "docker rmi $registry:$GIT_COMMIT_SHORT" 
             }
         } 
+
+        stage('EKS Deployment'){
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'awsAccountId', variable: 'AWS_ACCOUNT_ID')
+                    ]) {
+                        kubernetesDeploy(configs: "timeoffapp/timeoffapp-service.yaml", kubeconfigId: "eksKubeConfigFile", enableConfigSubstitution: true)
+                    }
+                    
+                }
+            }
+        }
     }
 }
