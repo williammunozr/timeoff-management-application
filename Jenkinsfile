@@ -1,7 +1,7 @@
 pipeline { 
 
     environment { 
-        registry = "YourDockerhubAccount/YourRepository" 
+        registry = "hachikoapp/timeoff-management-app" 
         registryCredential = 'dockerHubId' 
         dockerImage = '' 
     }
