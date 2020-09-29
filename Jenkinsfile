@@ -1,6 +1,8 @@
 pipeline { 
 
     environment { 
+        REGION_ID = "us-east-2"
+        ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
         REGISTRY = "hachikoapp/timeoff-management-app" 
         registryCredential = 'dockerHubId' 
         dockerImage = '' 
@@ -45,9 +47,10 @@ pipeline {
         stage('EKS Deployment') {
             steps {
                 script {
-                    //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh -v /jenkins/.aws:/root/.aws') {
+                    //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
                         sh """
-                            aws eks --region us-east-2 update-kubeconfig --name eks-cluster
+                            aws eks --region $REGION_ID update-kubeconfig --name eks-cluster
+                            sed -i 's/#ACCOUNT_ID#/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
                             kubectl get pods,svc
                         """
