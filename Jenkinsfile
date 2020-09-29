@@ -43,7 +43,8 @@ pipeline {
             steps {
                 script {
                     docker.image('alpine/k8s:1.14.9') {
-                    sh 'kubectl version'
+                        sh 'kubectl version'
+                    }
                 }
             }
         }
