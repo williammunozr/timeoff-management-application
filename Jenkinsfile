@@ -9,6 +9,11 @@ pipeline {
                 script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
                 returnStdout: true
         )
+
+        PROJECT_ID = 'dev-hachiko-2020'
+        CLUSTER_NAME = 'gke-cluster'
+        LOCATION = 'us-east4-a'
+        CREDENTIALS_ID = 'gke'
     }
 
     agent any 
@@ -39,16 +44,9 @@ pipeline {
             }
         } 
 
-        stage('EKS Deployment'){
-            steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'awsAccountId', variable: 'AWS_ACCOUNT_ID')
-                    ]) {
-                        kubernetesDeploy(configs: "timeoffapp/timeoffapp-service.yaml", kubeconfigId: "eksKubeConfigFile", enableConfigSubstitution: true)
-                        
-                    }
-                }
+        stage('Deploy to GKE') {
+            steps{
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'timeoffapp/timeoff-service.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
     }
