@@ -1,7 +1,7 @@
 pipeline { 
 
     environment { 
-        registry = "hachikoapp/timeoff-management-app" 
+        REGISTRY = "hachikoapp/timeoff-management-app" 
         registryCredential = 'dockerHubId' 
         dockerImage = '' 
 
@@ -9,11 +9,6 @@ pipeline {
                 script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
                 returnStdout: true
         )
-
-        PROJECT_ID = 'dev-hachiko-2020'
-        CLUSTER_NAME = 'gke-cluster'
-        LOCATION = 'us-east4-a'
-        CREDENTIALS_ID = 'gke'
     }
 
     agent any 
@@ -23,7 +18,7 @@ pipeline {
         stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":$GIT_COMMIT_SHORT" 
+                    dockerImage = docker.build("${REGISTRY}:${env.GIT_COMMIT_SHORT}")
                 }
             } 
         }
@@ -40,14 +35,10 @@ pipeline {
 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi $registry:$GIT_COMMIT_SHORT" 
+                sh "docker rmi $REGISTRY:$GIT_COMMIT_SHORT" 
             }
         } 
 
-        stage('Deploy to GKE') {
-            steps{
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'timeoffapp/timeoff-service.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-            }
-        }
+        // sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
     }
 }
