@@ -49,6 +49,7 @@ pipeline {
                         sh """
                             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-cluster
                             kubectl get nodes
+                            kubectl create -f timeoffapp/timeoffapp-service.yaml
                         """
                     }
                 }
