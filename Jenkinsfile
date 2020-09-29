@@ -11,9 +11,6 @@ pipeline {
         )
 
         RDS_ENDPOINT = credentials('rds_endpoint')
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION = credentials('AWS_DEFAULT_REGION')
 
     }
 
@@ -48,15 +45,11 @@ pipeline {
         stage('EKS Deployment') {
             steps {
                 script {
-                    withEnv(['AWS_ACCESS_KEY_ID=xkjhfsdhfjkasdhjk', 'AWS_SECRET_ACCESS_KEY=jkashdfkjashdfjksad', 'AWS_DEFAULT_REGION=us-east-2']) {
-                        docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
-                            sh """
-                                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                                export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-                                aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-cluster
-                            """
-                        }
+                    docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh -v /jenkins/.aws:/root/.aws') {
+                        sh """
+                            aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-cluster
+                            kubectl get nodes
+                        """
                     }
                 }
             }
