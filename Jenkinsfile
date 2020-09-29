@@ -39,6 +39,15 @@ pipeline {
             }
         } 
 
+        stage('EKS Deployment') {
+            steps {
+                docker.image('alpine/k8s:1.14.9') {
+                    sh 'kubectl version'
+                }
+            }
+        }
         // sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+
+
     }
 }
