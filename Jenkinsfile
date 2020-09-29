@@ -45,13 +45,13 @@ pipeline {
         stage('EKS Deployment') {
             steps {
                 script {
-                    docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh -v /jenkins/.aws:/root/.aws') {
+                    //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh -v /jenkins/.aws:/root/.aws') {
                         sh """
                             aws eks --region us-east-2 update-kubeconfig --name eks-cluster
                             kubectl get nodes
                             kubectl create -f timeoffapp/timeoffapp-service.yaml
                         """
-                    }
+                    //}
                 }
             }
         }
