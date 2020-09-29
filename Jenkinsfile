@@ -14,6 +14,8 @@ pipeline {
 
         RDS_ENDPOINT = credentials('rds_endpoint')
 
+        DB_SECRETS = credentials('mysql_secrets')
+
     }
 
     agent any 
@@ -53,13 +55,11 @@ pipeline {
                             sed -i 's/#ACCOUNT_ID#/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
                             kubectl get pods,svc
+                            echo $DB_SECRETS
                         """
                     //}
                 }
             }
         }
-        // sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
-
-
     }
 }
