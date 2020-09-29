@@ -41,7 +41,8 @@ pipeline {
 
         stage('EKS Deployment') {
             steps {
-                docker.image('alpine/k8s:1.14.9') {
+                script {
+                    docker.image('alpine/k8s:1.14.9') {
                     sh 'kubectl version'
                 }
             }
