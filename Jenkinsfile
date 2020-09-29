@@ -9,6 +9,8 @@ pipeline {
                 script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
                 returnStdout: true
         )
+
+        RDS_ENDPOINT = credentials('rds_endpoint')
     }
 
     agent any 
@@ -46,6 +48,7 @@ pipeline {
                         docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
                             sh 'helm version'
                             sh 'echo $AWS_ACCESS_KEY_ID'
+                            sh 'echo $RDS_ENDPOINT'
                         }
                     }
                 }
