@@ -46,6 +46,7 @@ pipeline {
                         string(credentialsId: 'awsAccountId', variable: 'AWS_ACCOUNT_ID')
                     ]) {
                         kubernetesDeploy(configs: "timeoffapp/timeoffapp-service.yaml", kubeconfigId: "eksKubeConfigFile", enableConfigSubstitution: true)
+                        
                     }
                 }
             }
