@@ -11,6 +11,10 @@ pipeline {
         )
 
         RDS_ENDPOINT = credentials('rds_endpoint')
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_DEFAULT_REGION = credentials('AWS_DEFAULT_REGION')
+
     }
 
     agent any 
@@ -46,9 +50,12 @@ pipeline {
                 script {
                     withEnv(['AWS_ACCESS_KEY_ID=xkjhfsdhfjkasdhjk', 'AWS_SECRET_ACCESS_KEY=jkashdfkjashdfjksad', 'AWS_DEFAULT_REGION=us-east-2']) {
                         docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
-                            sh 'aws eks --region us-east-2 update-kubeconfig --name eks-cluster'
-                            sh 'helm version'
-                            sh 'echo RDS_ENDPOINT: $RDS_ENDPOINT'
+                            sh """
+                                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                                export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+                                aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-cluster
+                            """
                         }
                     }
                 }
