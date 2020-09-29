@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
-                        sh 'kubectl version'
+                        sh 'helm version'
                     }
                 }
             }
