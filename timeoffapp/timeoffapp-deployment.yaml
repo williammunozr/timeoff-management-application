@@ -15,7 +15,7 @@ spec:
        containers:
        - name: timeoffapp
          image: hachikoapp/timeoff-management-app:{{TAG}}
-         imagePullPolicy: {{IMAGEPULLPOLICY}}
+         imagePullPolicy: Always
          command: ["npm"]
          args: ["start"]         
          ports:

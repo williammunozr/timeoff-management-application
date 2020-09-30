@@ -6,7 +6,6 @@ pipeline {
 
         REGION_ID = "us-east-2"
         REGISTRY = "hachikoapp/timeoff-management-app" 
-        IMAGEPULLPOLICY = "Always"
         dockerImage = '' 
 
         GIT_COMMIT_SHORT = sh(
@@ -65,7 +64,6 @@ pipeline {
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
 
                             sed -i 's/{{TAG}}/$GIT_COMMIT_SHORT/g' timeoffapp/timeoffapp-deployment.yaml
-                            sed -i 's/{{IMAGEPULLPOLICY}}/$IMAGEPULLPOLICY/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_ENDPOINT}}/$DB_ENDPOINT/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_NAME}}/$DB_NAME/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_USERNAME}}/$DB_USERNAME/g' timeoffapp/timeoffapp-deployment.yaml
