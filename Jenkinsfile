@@ -5,6 +5,7 @@ pipeline {
         // Variables
 
         REGION_ID = "us-east-2"
+        EKS_CLUSTER_NAME = "eks-cluster"
         REGISTRY = "hachikoapp/timeoff-management-app" 
         dockerImage = '' 
 
@@ -59,7 +60,7 @@ pipeline {
                 script {
                     //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
                         sh """
-                            aws eks --region $REGION_ID update-kubeconfig --name eks-cluster
+                            aws eks --region $REGION_ID update-kubeconfig --name $EKS_CLUSTER_NAME
                             
                             sed -i 's/{{ACCOUNT_ID}}/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
