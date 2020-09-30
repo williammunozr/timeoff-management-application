@@ -20,6 +20,7 @@ pipeline {
         DB_NAME = credentials('DB_NAME')
         DB_USERNAME = credentials('DB_USERNAME')
         DB_PASSWORD = credentials('DB_PASSWD')
+        DB_DIALECT = credentials('DB_DIALECT')
         
         registryCredential = 'dockerHubId' 
 
@@ -68,6 +69,7 @@ pipeline {
                             sed -i 's/{{DB_NAME}}/$DB_NAME/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_USERNAME}}/$DB_USERNAME/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_PASSWORD}}/$DB_PASSWORD/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{DB_DIALECT}}/$DB_DIALECT/g' timeoffapp/timeoffapp-deployment.yaml
                             kubectl apply -f timeoffapp/timeoffapp-deployment.yaml
 
                             kubectl get pods,svc
