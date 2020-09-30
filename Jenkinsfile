@@ -5,7 +5,7 @@ pipeline {
         // Variables
 
         REGION_ID = "us-east-2"
-        REGISTRY = "hachikoapp/timeoff-management-app" 
+        REGISTRY = "hachikoapp\/timeoff-management-app" 
         IMAGEPULLPOLICY = "Always"
         dockerImage = '' 
 
