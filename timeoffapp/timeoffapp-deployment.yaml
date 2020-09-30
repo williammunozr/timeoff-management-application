@@ -14,8 +14,8 @@ spec:
      spec:
        containers:
        - name: timeoffapp
-         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-         imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+         image: {{REGISTRY}}:{{TAG}}
+         imagePullPolicy: {{IMAGEPULLPOLICY}}
          command: ["npm"]
          args: ["start"]         
          ports:
@@ -24,12 +24,12 @@ spec:
          - name: NODE_ENV
            value: production       
          - name: DB_HOST
-           value: {{ .Values.database.dbEndpoint }}
+           value: {{DB_ENDPOINT}}
          - name: DB_NAME
-           value: {{ .Values.database.dbName }}
+           value: {{DB_NAME}}
          - name: DB_USERNAME
-           value: {{ .Values.database.dbUsername }}
+           value: {{DB_USERNAME}}
          - name: DB_PASSWORD
-           value: {{ .Values.database.dbPassword }}
+           value: {{DB_PASSWORD}}
          - name: DB_DIALECT
-           value: {{ .Values.database.dbDialect }}
+           value: {{DB_DIALECT}}

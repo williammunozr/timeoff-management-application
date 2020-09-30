@@ -1,10 +1,12 @@
 pipeline { 
 
     environment { 
+
+        // Variables
+
         REGION_ID = "us-east-2"
-        ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
         REGISTRY = "hachikoapp/timeoff-management-app" 
-        registryCredential = 'dockerHubId' 
+        IMAGEPULLPOLICY = "Always"
         dockerImage = '' 
 
         GIT_COMMIT_SHORT = sh(
@@ -12,9 +14,15 @@ pipeline {
                 returnStdout: true
         )
 
-        RDS_ENDPOINT = credentials('rds_endpoint')
+        // Getting Secrets
 
-        DB_SECRETS = credentials('mysql_secrets')
+        ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
+        DB_ENDPOINT = credentials('DB_ENDPOINT')
+        DB_NAME = credentials('DB_NAME')
+        DB_USERNAME = credentials('DB_USERNAME')
+        DB_PASSWORD = credentials('DB_PASSWD')
+        
+        registryCredential = 'dockerHubId' 
 
     }
 
@@ -52,10 +60,20 @@ pipeline {
                     //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
                         sh """
                             aws eks --region $REGION_ID update-kubeconfig --name eks-cluster
-                            sed -i 's/#ACCOUNT_ID#/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
+                            
+                            sed -i 's/{{ACCOUNT_ID}}/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
+
+                            sed -i 's/{{REGISTRY}}/$REGISTRY/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{TAG}}/$GIT_COMMIT_SHORT/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{IMAGEPULLPOLICY}}/$IMAGEPULLPOLICY/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{DB_ENDPOINT}}/$DB_ENDPOINT/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{DB_NAME}}/$DB_NAME/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{DB_USERNAME}}/$DB_USERNAME/g' timeoffapp/timeoffapp-deployment.yaml
+                            sed -i 's/{{DB_PASSWORD}}/$DB_PASSWORD/g' timeoffapp/timeoffapp-deployment.yaml
+                            kubectl apply -f timeoffapp/timeoffapp-deployment.yaml
+
                             kubectl get pods,svc
-                            echo $DB_SECRETS
                         """
                     //}
                 }
