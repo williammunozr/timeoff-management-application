@@ -14,7 +14,7 @@ spec:
      spec:
        containers:
        - name: timeoffapp
-         image: {{REGISTRY}}:{{TAG}}
+         image: hachikoapp/timeoff-management-app:{{TAG}}
          imagePullPolicy: {{IMAGEPULLPOLICY}}
          command: ["npm"]
          args: ["start"]         

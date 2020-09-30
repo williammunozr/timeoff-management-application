@@ -5,7 +5,7 @@ pipeline {
         // Variables
 
         REGION_ID = "us-east-2"
-        REGISTRY = "hachikoapp\/timeoff-management-app" 
+        REGISTRY = "hachikoapp/timeoff-management-app" 
         IMAGEPULLPOLICY = "Always"
         dockerImage = '' 
 
@@ -64,7 +64,6 @@ pipeline {
                             sed -i 's/{{ACCOUNT_ID}}/$ACCOUNT_ID/g' timeoffapp/timeoffapp-service.yaml
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
 
-                            sed -i 's/{{REGISTRY}}/$REGISTRY/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{TAG}}/$GIT_COMMIT_SHORT/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{IMAGEPULLPOLICY}}/$IMAGEPULLPOLICY/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_ENDPOINT}}/$DB_ENDPOINT/g' timeoffapp/timeoffapp-deployment.yaml
