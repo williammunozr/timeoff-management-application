@@ -44,6 +44,23 @@ You need to create the following policies:
 }
 ```
 
+### AWSEKSJenkinsPolicy
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "eks:*",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+
 # Official repository documentation
 
 Web application for managing employee absences.
