@@ -44,7 +44,7 @@ You need to create the following policies:
 }
 ```
 
-### AWSEKSJenkinsPolicy
+### AWSSecretsManagerJenkinsPolicy
 
 ```
 {
@@ -60,6 +60,13 @@ You need to create the following policies:
 }
 ```
 
+### AWS Role AmazonEC2JenkinsRole for Jenkins EC2
+
+Create a role `AmazonEC2JenkinsRole` and assign the following policies, then assign this role to the Jenkins EC2.
+
+- AmazonEC2RoleforSSM
+- AWSSecretsManagerJenkinsPolicy
+- AWSSecretsManagerJenkinsPolicy
 
 # Official repository documentation
 
