@@ -11,6 +11,12 @@ In the following link we implement the Infrastructure on AWS Cloud Provider wher
 
 - [Infrastructure as Code](https://github.com/williammunozr/terraform-aws-eks)
 
+## Jenkins Plugins Requirements
+
+- [Docker Plugin](https://plugins.jenkins.io/docker-plugin/)
+- [AWS Secrets Manager Credentials Provider](https://plugins.jenkins.io/aws-secrets-manager-credentials-provider/)
+- [Kubernetes Continuous Deploy](https://plugins.jenkins.io/kubernetes-cd/)
+
 # Official repository documentation
 
 Web application for managing employee absences.
