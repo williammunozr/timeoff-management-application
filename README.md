@@ -68,6 +68,19 @@ Create a role `AmazonEC2JenkinsRole` and assign the following policies, then ass
 - AWSSecretsManagerJenkinsPolicy
 - AWSSecretsManagerJenkinsPolicy
 
+### AWS Secrets Manager Access
+
+We need to have access to the following secrets values:
+
+- DB_ENDPOINT
+- AWS_ACCOUNT_ID
+- DB_NAME
+- DB_USERNAME
+- DB_PASSWD
+- DB_DIALECT
+
+We need the tags `Key=jenkins:credentials:type,Value=string` because in the application deployment, we are going to use that tag to recover the secrets during the pipeline.
+
 # Official repository documentation
 
 Web application for managing employee absences.
