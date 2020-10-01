@@ -1,5 +1,17 @@
 
-# TimeOff.Management
+# TimeOff.Management Continuous Integration & Continuous Deployment
+
+## Architecture
+
+![alt text](images/Application_Deployment.png "Application Proposal")
+
+## Required Infrastructure to test this application
+
+In the following link we implement the Infrastructure on AWS Cloud Provider for where we can deploy this application. 
+
+- [Infrastructure as Code](https://github.com/williammunozr/terraform-aws-eks)
+
+# Official repository documentation
 
 Web application for managing employee absences.
 
