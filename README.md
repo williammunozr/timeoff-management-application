@@ -17,6 +17,33 @@ In the following link we implement the Infrastructure on AWS Cloud Provider wher
 - [AWS Secrets Manager Credentials Provider](https://plugins.jenkins.io/aws-secrets-manager-credentials-provider/)
 - [Kubernetes Continuous Deploy](https://plugins.jenkins.io/kubernetes-cd/)
 
+## AWS Policies needed for Jenkins EC2 AWS Role
+
+You need to create the following policies:
+
+### AWSSecretsManagerJenkinsPolicy
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetRandomPassword",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:ListSecretVersionIds",
+                "secretsmanager:ListSecrets"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 # Official repository documentation
 
 Web application for managing employee absences.
