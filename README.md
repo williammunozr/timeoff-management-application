@@ -64,7 +64,7 @@ You need to create the following policies:
 
 Create a role `AmazonEC2JenkinsRole` and assign the following policies, then assign this role to the Jenkins EC2.
 
-- AmazonEC2RoleforSSM
+- AmazonEC2RoleforSSM (This policy lets you to connect to the EC2 Jenkins instance using Session Manager)
 - AWSSecretsManagerJenkinsPolicy
 - AWSSecretsManagerJenkinsPolicy
 
