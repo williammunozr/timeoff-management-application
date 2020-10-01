@@ -7,7 +7,7 @@
 
 ## Required Infrastructure to test this application
 
-In the following link we implement the Infrastructure on AWS Cloud Provider for where we can deploy this application. 
+In the following link we implement the Infrastructure on AWS Cloud Provider where we can deploy this application. 
 
 - [Infrastructure as Code](https://github.com/williammunozr/terraform-aws-eks)
 
