@@ -55,6 +55,10 @@ pipeline {
             }
         } 
 
+        /* 
+            Since Jul-2020 is not working
+            https://github.com/jenkinsci/kubernetes-cd-plugin/issues/134
+            ERROR: Can't construct a java object for tag:yaml.org,2002:io.kubernetes.client.openapi.models.V1Deployment; exception=Class not found: io.kubernetes.client.openapi.models.V1Deployment
         stage('Deploy on kubernetes') {
             steps {
                 kubernetesDeploy(
@@ -63,9 +67,9 @@ pipeline {
                     enableConfigSubstitution: true
                 )
             }
-        }
+        }*/
 
-        /*stage('EKS Deployment') {
+        stage('EKS Deployment') {
             steps {
                 script {
                     //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
@@ -88,6 +92,6 @@ pipeline {
                     //}
                 }
             }
-        }*/
+        }
     }
 }
