@@ -31,7 +31,7 @@ pipeline {
 
     stages { 
 
-        stage('Building our image') { 
+        stage('Building Timeoff Image') { 
             steps { 
                 script { 
                     dockerImage = docker.build("${REGISTRY}:${env.GIT_COMMIT_SHORT}")
@@ -39,7 +39,7 @@ pipeline {
             } 
         }
 
-        stage('Deploy our image') { 
+        stage('Deploy Timeoff Image') { 
             steps { 
                 script { 
                     docker.withRegistry( '', registryCredential ) { 
@@ -49,7 +49,7 @@ pipeline {
             }
         } 
 
-        stage('Cleaning up') { 
+        stage('Cleaning Up') { 
             steps { 
                 sh "docker rmi $REGISTRY:$GIT_COMMIT_SHORT" 
             }
@@ -69,7 +69,7 @@ pipeline {
             }
         }*/
 
-        stage('EKS Deployment') {
+        stage('Timeoff Deployment to EKS') {
             steps {
                 script {
                     //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
