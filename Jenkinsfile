@@ -55,7 +55,17 @@ pipeline {
             }
         } 
 
-        stage('EKS Deployment') {
+        stage('Deploy on kubernetes') {
+            steps {
+                kubernetesDeploy(
+                    kubeconfigId: 'eks_kubeconfig',
+                    configs: 'timeoffapp/*.yaml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
+
+        /*stage('EKS Deployment') {
             steps {
                 script {
                     //docker.image('alpine/k8s:1.14.9').inside('-u 0:1000 -v /jenkins/.ssh:/root/.ssh') {
@@ -78,6 +88,6 @@ pipeline {
                     //}
                 }
             }
-        }
+        }*/
     }
 }
