@@ -8,10 +8,11 @@ RUN apt-get install -y git npm nodejs
 RUN adduser --system app --home /app
 USER app
 
+COPY . /app
 WORKDIR /app
-RUN git clone https://github.com/williammunozr/timeoff-management-application.git timeoff-management
+#RUN git clone https://github.com/williammunozr/timeoff-management-application.git timeoff-management
 
-WORKDIR /app/timeoff-management
+#WORKDIR /app/timeoff-management
 RUN npm install
 
 EXPOSE 3000
