@@ -34,6 +34,7 @@ pipeline {
         stage('Building Timeoff Image') { 
             steps { 
                 script { 
+                    sh 'pwd'
                     dockerImage = docker.build("${REGISTRY}:${env.GIT_COMMIT_SHORT}")
                 }
             } 
@@ -80,7 +81,6 @@ pipeline {
                             kubectl apply -f timeoffapp/timeoffapp-service.yaml
 
                             sed -i 's/{{TAG}}/$GIT_COMMIT_SHORT/g' timeoffapp/timeoffapp-deployment.yaml
-                            sed -i 's/{{DB_ENDPOINT}}/$DB_ENDPOINT/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_NAME}}/$DB_NAME/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_USERNAME}}/$DB_USERNAME/g' timeoffapp/timeoffapp-deployment.yaml
                             sed -i 's/{{DB_PASSWORD}}/$DB_PASSWORD/g' timeoffapp/timeoffapp-deployment.yaml
